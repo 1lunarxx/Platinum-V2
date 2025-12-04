@@ -2,7 +2,7 @@
 #include <iostream>
 #include <Globals.h>
 
-void Request::ProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
+bool Request::ProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 {
     auto URL = HttpRequest->GetURL().ToString();
     const wchar_t* domains[] = { L"epicgames.com", L"epicgames.dev", L"epicgames.net" };
@@ -58,7 +58,7 @@ void Request::ProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 	return Originals::ProcessRequest(HttpRequest);
 }
 
-void Request::EOSProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
+bool Request::EOSProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 {
     auto URL = HttpRequest->GetURL().ToString();
     const wchar_t* domains[] = { L"epicgames.com", L"epicgames.dev", L"epicgames.net" };

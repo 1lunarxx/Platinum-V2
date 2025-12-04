@@ -6,12 +6,12 @@ namespace Request
 {
 	namespace Originals
 	{
-		static void (*ProcessRequest)(Containers::FCurlHttpRequest*);
-		static void (*EOSProcessRequest)(Containers::FCurlHttpRequest*);
+		static bool (*ProcessRequest)(Containers::FCurlHttpRequest*);
+		static bool (*EOSProcessRequest)(Containers::FCurlHttpRequest*);
 	}
 
-	static void ProcessRequest(Containers::FCurlHttpRequest*);
-	static void EOSProcessRequest(Containers::FCurlHttpRequest*);
+	static bool ProcessRequest(Containers::FCurlHttpRequest*);
+	static bool EOSProcessRequest(Containers::FCurlHttpRequest*);
 
 	void Patch();
 }
