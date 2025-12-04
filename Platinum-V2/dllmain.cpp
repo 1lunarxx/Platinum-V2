@@ -11,7 +11,7 @@ void Main()
     MH_Initialize();
 
     Request::Patch();
-    Hooks::Patch();
+    //Hooks::Patch();
 
     MH_EnableHook(MH_ALL_HOOKS);
 }

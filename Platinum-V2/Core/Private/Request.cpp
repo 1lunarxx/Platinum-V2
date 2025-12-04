@@ -4,6 +4,7 @@
 
 bool Request::ProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 {
+    printf("ProcessRequest");
     auto URL = HttpRequest->GetURL().ToString();
     const wchar_t* domains[] = { L"epicgames.com", L"epicgames.dev", L"epicgames.net" };
 
@@ -103,9 +104,9 @@ void Request::Patch()
         {
             Originals::ProcessRequest = reinterpret_cast<bool(*)(Containers::FCurlHttpRequest*)>(sRef - i);
             Hook(sRef - i, ProcessRequest, (void**)&Originals::ProcessRequest);
+
             break;
         }
-
         else if (*(uint8_t*)(sRef - i) == 0x48 && *(uint8_t*)(sRef - i + 1) == 0x8B && *(uint8_t*)(sRef - i + 2) == 0xC4)
         {
             Originals::ProcessRequest = reinterpret_cast<bool(*)(Containers::FCurlHttpRequest*)>(sRef - i);
