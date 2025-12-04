@@ -20,6 +20,7 @@ bool Request::ProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
                 for (int i = 0; i < 2048; i++)
                 {
                     auto sRef = Finder::FindString(L"ProcessRequest failed. URL '%s' is not using a whitelisted domain. %p", EOSHandle);
+
                     if (*(uint8_t*)(sRef - i) == 0x48 && *(uint8_t*)(sRef - i + 1) == 0x89 && *(uint8_t*)(sRef - i + 2) == 0x5C)
                     {
                         Hook(sRef - i, EOSProcessRequest, (void**)&Originals::EOSProcessRequest);
@@ -94,6 +95,7 @@ bool Request::EOSProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 void Request::Patch()
 {
     auto sRef = Finder::FindString(L"STAT_FCurlHttpRequest_ProcessRequest", ImageBase);
+    if (!sRef) sRef = Finder::FindString(L"ProcessRequest failed. URL '%s' is not using a whitelisted domain. %p", ImageBase);
 
     for (int i = 0; i < 2048; i++)
     {

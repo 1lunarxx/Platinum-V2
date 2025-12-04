@@ -3,4 +3,4 @@
 
 static std::wstring BackendURL = L"http://localhost:3551";
 static bool bEOS = true; // i think seasons 24+?
-static int Season = 29;
+static int Season = 30;
