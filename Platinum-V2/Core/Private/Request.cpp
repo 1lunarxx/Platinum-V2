@@ -4,7 +4,6 @@
 
 bool Request::ProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 {
-    printf("ProcessRequest");
     auto URL = HttpRequest->GetURL().ToString();
     const wchar_t* domains[] = { L"epicgames.com", L"epicgames.dev", L"epicgames.net" };
 
@@ -13,13 +12,13 @@ bool Request::ProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 
     if (Requests == 10)
     {
-        auto EOSHandle = reinterpret_cast<uintptr_t>(GetModuleHandleA("EOSSDK-Win64-Shipping.dll"));
+        auto EOSHandle = reinterpret_cast<uintptr_t>(LoadLibraryA("EOSSDK-Win64-Shipping.dll"));
         if (EOSHandle)
         {
+            auto sRef = Finder::FindString(L"ProcessRequest failed. URL '%s' is not using a whitelisted domain. %p", EOSHandle);
+
             for (int i = 0; i < 2048; i++)
             {
-                auto sRef = Finder::FindString(L"ProcessRequest failed. URL '%s' is not using a whitelisted domain. %p", EOSHandle);
-
                 if (*(uint8_t*)(sRef - i) == 0x48 && *(uint8_t*)(sRef - i + 1) == 0x89 && *(uint8_t*)(sRef - i + 2) == 0x5C)
                 {
                     Hook(sRef - i, EOSProcessRequest, (void**)&Originals::EOSProcessRequest);
@@ -50,7 +49,7 @@ bool Request::ProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
             if (*endpoint != L'/') newurl += L'/';
             newurl += endpoint;
 
-            HttpRequest->SetURL(newurl.c_str());
+            HttpRequest->SetURL(newurl.c_str(), false);
         }
     }
 
@@ -60,7 +59,7 @@ bool Request::ProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 bool Request::EOSProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 {
     auto URL = HttpRequest->GetURL().ToString();
-    const wchar_t* domains[] = { L"epicgames.com", L"epicgames.dev", L"epicgames.net" };
+    const wchar_t* domains[] = { L"epicgames.com", L"epicgames.dev", L"epicgames.net", L"api.epicgames.dev"};
 
     if (URL)
     {
@@ -83,7 +82,7 @@ bool Request::EOSProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
             if (*endpoint != L'/') newurl += L'/';
             newurl += endpoint;
 
-            HttpRequest->SetURL(newurl.c_str());
+            HttpRequest->SetURL(newurl.c_str(), true);
         }
     }
 

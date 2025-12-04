@@ -59,6 +59,6 @@ namespace Containers
 		void** VTable;
 
 		FString GetURL();
-		void SetURL(const wchar_t* url);
+		void SetURL(const wchar_t* url, bool bEOS);
 	};
 }

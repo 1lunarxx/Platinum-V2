@@ -25,9 +25,9 @@ Containers::FString Containers::FCurlHttpRequest::GetURL()
     return ((FString & (*)(FCurlHttpRequest*, FString&))(*VTable))(this, Result);
 }
 
-void Containers::FCurlHttpRequest::SetURL(const wchar_t* url)
+void Containers::FCurlHttpRequest::SetURL(const wchar_t* url, bool bEOS)
 {
-    if (FN_Version >= 29.00)
+    if (FN_Version >= 29.00 && !bEOS)
     {
         // I MANUALLY FOUND THIS BY TRYING ALL NUMBERS
         FString s(url);
