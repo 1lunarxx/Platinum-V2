@@ -1,4 +1,5 @@
 #include "Core/Public/Containers.h"
+#include <Globals.h>
 
 Containers::FString::FString(const wchar_t* str)
 {
@@ -26,7 +27,18 @@ Containers::FString Containers::FCurlHttpRequest::GetURL()
 
 void Containers::FCurlHttpRequest::SetURL(const wchar_t* url)
 {
-    FString str(url);
-    auto fn = (void (*)(FCurlHttpRequest*, FString&))VTable[10];
-    fn(this, str);
+    // scuffed, cba to make a fortnite ver checker
+    if (Season >= 29)
+    {
+        // I MANUALLY FOUND THIS BY TRYING ALL NUMBERS
+        FString s(url);
+        auto fn = (void(*)(FCurlHttpRequest*, FString&))VTable[13];
+        fn(this, s);
+    }
+    else
+    {
+        FString s(url);
+        auto fn = (void(*)(FCurlHttpRequest*, FString&))VTable[10];
+        fn(this, s);
+    }
 }

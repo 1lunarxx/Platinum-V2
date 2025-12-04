@@ -42,6 +42,9 @@ namespace Containers
 			NumElements = 0;
 			MaxElements = 0;
 		}
+
+		auto GetData() { return Data; }
+
 	};
 
 	class FString : public TArray<wchar_t> {

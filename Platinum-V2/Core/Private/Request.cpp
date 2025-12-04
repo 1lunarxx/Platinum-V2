@@ -94,15 +94,19 @@ bool Request::EOSProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 void Request::Patch()
 {
     auto sRef = Finder::FindString(L"STAT_FCurlHttpRequest_ProcessRequest", ImageBase);
+
     for (int i = 0; i < 2048; i++)
     {
         if (*(uint8_t*)(sRef - i) == 0x4C && *(uint8_t*)(sRef - i + 1) == 0x8B && *(uint8_t*)(sRef - i + 2) == 0xDC)
         {
+            Originals::ProcessRequest = reinterpret_cast<bool(*)(Containers::FCurlHttpRequest*)>(sRef - i);
             Hook(sRef - i, ProcessRequest, (void**)&Originals::ProcessRequest);
             break;
         }
+
         else if (*(uint8_t*)(sRef - i) == 0x48 && *(uint8_t*)(sRef - i + 1) == 0x8B && *(uint8_t*)(sRef - i + 2) == 0xC4)
         {
+            Originals::ProcessRequest = reinterpret_cast<bool(*)(Containers::FCurlHttpRequest*)>(sRef - i);
             Hook(sRef - i, ProcessRequest, (void**)&Originals::ProcessRequest);
             break;
         }
