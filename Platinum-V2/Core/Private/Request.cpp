@@ -84,15 +84,12 @@ void Request::EOSProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
             if (*endpoint != L'/') newurl += L'/';
             newurl += endpoint;
 
-            std::wcout << L"NEWURL: " << newurl << std::endl;
-
             HttpRequest->SetURL(newurl.c_str());
         }
     }
 
     return Originals::EOSProcessRequest(HttpRequest);
 }
-
 
 void Request::Patch()
 {
