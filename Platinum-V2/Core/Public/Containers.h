@@ -9,8 +9,6 @@ namespace Containers
 	public:
 		static inline void* InternalRealloc(void* _a1, __int64 _a2, unsigned int _a3) {
 			static auto addr = Finder::FindPattern("48 89 5C 24 08 48 89 74 24 10 57 48 83 EC ? 48 8B F1 41 8B D8 48 8B 0D ? ? ? ?");
-			std::cout << "realloc: " << addr << std::endl;
-
 			auto ret = reinterpret_cast<void* (*)(void*, __int64, unsigned int)>(addr);
 			return ret(_a1, _a2, _a3);
 		}

@@ -1,5 +1,6 @@
 #include "framework.h"
 #include <Core/Public/Request.h>
+#include <Core/Public/Hooks.h>
 
 void Main()
 {
@@ -10,9 +11,7 @@ void Main()
     MH_Initialize();
 
     Request::Patch();
-
-    static auto addr = Finder::FindPattern("48 89 5C 24 08 48 89 74 24 10 57 48 83 EC ? 48 8B F1 41 8B D8 48 8B 0D ? ? ? ?");
-    std::cout << "realloc: " << addr << std::endl;
+    Hooks::Patch();
 
     MH_EnableHook(MH_ALL_HOOKS);
 }
