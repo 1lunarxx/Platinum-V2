@@ -1,6 +1,7 @@
 #include "framework.h"
 #include <Core/Public/Request.h>
 #include <Core/Public/Hooks.h>
+#include <Globals.h>
 
 void Main()
 {
@@ -11,7 +12,7 @@ void Main()
     MH_Initialize();
 
     Request::Patch();
-    //Hooks::Patch();
+    if (FN_Version >= 29) Hooks::Patch();
 
     MH_EnableHook(MH_ALL_HOOKS);
 }

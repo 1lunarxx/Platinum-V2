@@ -27,8 +27,7 @@ Containers::FString Containers::FCurlHttpRequest::GetURL()
 
 void Containers::FCurlHttpRequest::SetURL(const wchar_t* url)
 {
-    // scuffed, cba to make a fortnite ver checker
-    if (Season >= 29)
+    if (FN_Version >= 29.00)
     {
         // I MANUALLY FOUND THIS BY TRYING ALL NUMBERS
         FString s(url);

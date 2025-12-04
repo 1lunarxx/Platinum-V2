@@ -12,7 +12,6 @@
 #include "Minhook/MinHook.h"
 
 inline uint64_t ImageBase = *(uint64_t*)(__readgsqword(0x60) + 0x10);
-
 inline void Hook(uintptr_t offset, void* detour, void** og = nullptr)
 {
 	MH_CreateHook((LPVOID)offset, detour, (LPVOID*)og);

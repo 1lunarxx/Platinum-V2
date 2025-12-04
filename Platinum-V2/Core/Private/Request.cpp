@@ -13,20 +13,17 @@ bool Request::ProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 
     if (Requests == 10)
     {
-        if (bEOS)
+        auto EOSHandle = reinterpret_cast<uintptr_t>(GetModuleHandleA("EOSSDK-Win64-Shipping.dll"));
+        if (EOSHandle)
         {
-            auto EOSHandle = reinterpret_cast<uintptr_t>(GetModuleHandleA("EOSSDK-Win64-Shipping.dll"));
-            if (EOSHandle)
+            for (int i = 0; i < 2048; i++)
             {
-                for (int i = 0; i < 2048; i++)
-                {
-                    auto sRef = Finder::FindString(L"ProcessRequest failed. URL '%s' is not using a whitelisted domain. %p", EOSHandle);
+                auto sRef = Finder::FindString(L"ProcessRequest failed. URL '%s' is not using a whitelisted domain. %p", EOSHandle);
 
-                    if (*(uint8_t*)(sRef - i) == 0x48 && *(uint8_t*)(sRef - i + 1) == 0x89 && *(uint8_t*)(sRef - i + 2) == 0x5C)
-                    {
-                        Hook(sRef - i, EOSProcessRequest, (void**)&Originals::EOSProcessRequest);
-                        break;
-                    }
+                if (*(uint8_t*)(sRef - i) == 0x48 && *(uint8_t*)(sRef - i + 1) == 0x89 && *(uint8_t*)(sRef - i + 2) == 0x5C)
+                {
+                    Hook(sRef - i, EOSProcessRequest, (void**)&Originals::EOSProcessRequest);
+                    break;
                 }
             }
         }
@@ -96,7 +93,7 @@ bool Request::EOSProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 void Request::Patch()
 {
     auto sRef = Finder::FindString(L"STAT_FCurlHttpRequest_ProcessRequest", ImageBase);
-    if (!sRef) sRef = Finder::FindString(L"ProcessRequest failed. URL '%s' is not using a whitelisted domain. %p", ImageBase);
+    if (!sRef) sRef = Finder::FindString(L"%p: request (easy handle:%p) has been added to threaded queue for processing", ImageBase);
 
     for (int i = 0; i < 2048; i++)
     {
@@ -104,10 +101,15 @@ void Request::Patch()
         {
             Originals::ProcessRequest = reinterpret_cast<bool(*)(Containers::FCurlHttpRequest*)>(sRef - i);
             Hook(sRef - i, ProcessRequest, (void**)&Originals::ProcessRequest);
-
             break;
         }
         else if (*(uint8_t*)(sRef - i) == 0x48 && *(uint8_t*)(sRef - i + 1) == 0x8B && *(uint8_t*)(sRef - i + 2) == 0xC4)
+        {
+            Originals::ProcessRequest = reinterpret_cast<bool(*)(Containers::FCurlHttpRequest*)>(sRef - i);
+            Hook(sRef - i, ProcessRequest, (void**)&Originals::ProcessRequest);
+            break;
+        }
+        else if (*(uint8_t*)(sRef - i) == 0x40 && *(uint8_t*)(sRef - i + 1) == 0x55)
         {
             Originals::ProcessRequest = reinterpret_cast<bool(*)(Containers::FCurlHttpRequest*)>(sRef - i);
             Hook(sRef - i, ProcessRequest, (void**)&Originals::ProcessRequest);
