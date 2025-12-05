@@ -3,3 +3,5 @@
 
 static std::wstring BackendURL = L"http://localhost:3551";
 static int FN_Version = 29;
+
+static bool bConsole = true; // log the output of fortnite through console

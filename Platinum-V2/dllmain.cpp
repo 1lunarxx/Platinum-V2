@@ -1,20 +1,21 @@
 #include "framework.h"
 #include <Core/Public/Request.h>
-#include <Core/Public/Hooks.h>
 #include <Globals.h>
+#include <Core/Public/Hooks.h>
 
 void Main()
 {
-    AllocConsole();
-    FILE* F;
-    freopen_s(&F, "CONOUT$", "w", stdout);
-    SetConsoleTitleA("Platinum V2 | https://github.com/1lunarxx/Platinum-V2");
-    MH_Initialize();
+    if (bConsole)
+    {
+        AllocConsole();
+        FILE* F;
+        freopen_s(&F, "CONOUT$", "w", stdout);
+        SetConsoleTitleA("Platinum V2 | https://github.com/1lunarxx/Platinum-V2");
+        MH_Initialize();
+    }
 
     Request::Patch();
-    if (FN_Version >= 29) Hooks::Patch();
-
-    MH_EnableHook(MH_ALL_HOOKS);
+    Hooks::Patch();
 }
 
 BOOL APIENTRY DllMain(HMODULE Module, DWORD Reason, LPVOID Reserved)
