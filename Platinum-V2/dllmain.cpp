@@ -2,6 +2,7 @@
 #include <Core/Public/Request.h>
 #include <Globals.h>
 #include <Core/Public/Hooks.h>
+#include <Core/Public/Pak.h>
 
 void Main()
 {
@@ -16,6 +17,7 @@ void Main()
 
     Request::Patch();
     Hooks::Patch();
+    Pak::Patch();
 }
 
 BOOL APIENTRY DllMain(HMODULE Module, DWORD Reason, LPVOID Reserved)

@@ -114,5 +114,5 @@ void Request::Patch()
             Hook(sRef - i, ProcessRequest, (void**)&Originals::ProcessRequest);
             break;
         }
-    }
+    } 
 }
