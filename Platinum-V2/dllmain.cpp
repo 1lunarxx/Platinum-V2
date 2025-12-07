@@ -12,8 +12,9 @@ void Main()
         FILE* F;
         freopen_s(&F, "CONOUT$", "w", stdout);
         SetConsoleTitleA("Platinum V2 | https://github.com/1lunarxx/Platinum-V2");
-        MH_Initialize();
     }
+
+    MH_Initialize();
 
     Request::Patch();
     Hooks::Patch();
