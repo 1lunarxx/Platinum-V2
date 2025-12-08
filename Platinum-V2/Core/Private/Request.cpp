@@ -44,12 +44,12 @@ bool Request::ProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 
         if (endpoint)
         {
-            std::wstring newurl = BackendURL;
+            std::wstring newUrl = BackendURL;
 
-            if (*endpoint != L'/') newurl += L'/';
-            newurl += endpoint;
+            if (*endpoint != L'/') newUrl += L'/';
+            newUrl += endpoint;
 
-            HttpRequest->SetURL(newurl.c_str(), false);
+            HttpRequest->SetURL(newUrl.c_str(), false);
         }
     }
 
@@ -77,12 +77,12 @@ bool Request::EOSProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 
         if (endpoint)
         {
-            std::wstring newurl = BackendURL;
+            std::wstring newUrl = BackendURL;
 
-            if (*endpoint != L'/') newurl += L'/';
-            newurl += endpoint;
+            if (*endpoint != L'/') newUrl += L'/';
+            newUrl += endpoint;
 
-            HttpRequest->SetURL(newurl.c_str(), true);
+            HttpRequest->SetURL(newUrl.c_str(), true);
         }
     }
 

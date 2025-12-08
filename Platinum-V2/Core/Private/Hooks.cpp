@@ -4,7 +4,8 @@
 
 void Hooks::Patch()
 {
-    if (Finder::FN_Version() < 29.00) return;
+    if (Finder::FN_Version() < 29.00)
+        return;
 
 	// UnsafeEnvorimentPopup
 	{
@@ -35,4 +36,9 @@ void Hooks::Patch()
         *(uint8_t*)Addr = 0xC3;
         VirtualProtect((LPVOID)Addr, 1, oldProt, &oldProt);
 	}
+
+    // RequestExit
+    {
+
+    }
 }
