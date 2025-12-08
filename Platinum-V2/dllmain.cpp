@@ -20,7 +20,7 @@ void Main()
     Hooks::Patch();
     Pak::Patch();
 
-    std::cout << "fnver: " << Finder::FN_Version() << std::endl;
+    //std::cout << "fnver: " << Finder::FN_Version() << std::endl;
 }
 
 BOOL APIENTRY DllMain(HMODULE Module, DWORD Reason, LPVOID Reserved)
