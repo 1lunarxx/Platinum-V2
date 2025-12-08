@@ -27,8 +27,10 @@ BOOL APIENTRY DllMain(HMODULE Module, DWORD Reason, LPVOID Reserved)
 {
     switch (Reason)
     {
-    case 1: std::thread(Main).detach();
-    case 0: break;
+    case 1: 
+        std::thread(Main).detach();
+    case 0:
+        break;
     }
     return 1;
 }

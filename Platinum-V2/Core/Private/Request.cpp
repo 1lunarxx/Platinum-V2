@@ -92,7 +92,8 @@ bool Request::EOSProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 void Request::Patch()
 {
     auto sRef = Finder::FindString(L"STAT_FCurlHttpRequest_ProcessRequest", ImageBase);
-    if (!sRef) sRef = Finder::FindString(L"%p: request (easy handle:%p) has been added to threaded queue for processing", ImageBase);
+    if (!sRef) 
+        sRef = Finder::FindString(L"%p: request (easy handle:%p) has been added to threaded queue for processing", ImageBase);
 
     for (int i = 0; i < 2048; i++)
     {
