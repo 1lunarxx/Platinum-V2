@@ -4,7 +4,7 @@
 
 void Hooks::Patch()
 {
-    if (FN_Version < 29) return;
+    if (Finder::FN_Version() < 29.00) return;
 
 	// UnsafeEnvorimentPopup
 	{

@@ -21,7 +21,7 @@ void Pak::SigningKeyCheck(__int64 a1, __int64 a2, __int64 a3, __int64 a4, __int6
 void Pak::Patch()
 {
 	auto sRef = Finder::FindString(L"Invalid signing key", ImageBase);
-	if (sRef && FN_Version >= 14 && FN_Version <= 17)
+	if (sRef && Finder::FN_Version() >= 14.00 && Finder::FN_Version() <= 17.30)
 	{
 		for (int i = 0; i < 2048; i++)
 		{
