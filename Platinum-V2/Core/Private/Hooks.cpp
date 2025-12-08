@@ -26,7 +26,9 @@ void Hooks::Patch()
             Addr = Finder::FindPattern(p);
             if (Addr) break;
         }
-        if (!Addr) return;
+
+        if (!Addr) 
+            return;
 
         DWORD oldProt;
         VirtualProtect((LPVOID)Addr, 1, PAGE_EXECUTE_READWRITE, &oldProt);

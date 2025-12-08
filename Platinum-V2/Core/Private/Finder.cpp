@@ -10,7 +10,8 @@ IMAGE_SECTION_HEADER* Finder::PE::GetSection(const char* name, uintptr_t module)
     for (int i = 0; i < net_headers->FileHeader.NumberOfSections; i++)
     {
         IMAGE_SECTION_HEADER* Section = StartOfSects + i;
-        if (strncmp((const char*)Section->Name, name, 8) == 0) return Section;
+        if (strncmp((const char*)Section->Name, name, 8) == 0) 
+            return Section;
     }
 
     return nullptr;
@@ -35,7 +36,8 @@ uintptr_t Finder::FindString(const wchar_t* string, uintptr_t module)
         uint8_t* target = (textBase + i + 6) + rel;
 
         if (target < rdataBase || target >= rdataEnd) continue;
-        if (wcscmp((wchar_t*)target, string) == 0) return reinterpret_cast<uintptr_t>(textBase + i - 1);
+        if (wcscmp((wchar_t*)target, string) == 0) 
+            return reinterpret_cast<uintptr_t>(textBase + i - 1);
     }
 
     return 0;
@@ -92,8 +94,7 @@ uintptr_t Finder::FindPatternR(const char* signature)
 
         for (size_t j = 0; j < patternSize; ++j)
         {
-            if (patternData[j] != -1 &&
-                base[i + j] != static_cast<uint8_t>(patternData[j]))
+            if (patternData[j] != -1 && base[i + j] != static_cast<uint8_t>(patternData[j]))
             {
                 found = false;
                 break;
