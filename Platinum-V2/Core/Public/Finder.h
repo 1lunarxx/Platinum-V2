@@ -1,6 +1,11 @@
 #pragma once
 #include "framework.h"
 
+enum EModuleType
+{
+    Text,
+    RData
+};
 namespace Finder
 {
     static std::vector<short> parsePattern(const char* pattern)
@@ -26,8 +31,7 @@ namespace Finder
 	}
 
 	uintptr_t FindString(const wchar_t* string, uintptr_t module);
-	uintptr_t FindPattern(const char* signature);
-    uintptr_t FindPatternR(const char* signature);
+	uintptr_t FindPattern(const char* signature, EModuleType Type = EModuleType::Text);
 
     double FN_Version();
 }

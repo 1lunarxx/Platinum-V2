@@ -1,4 +1,5 @@
 #include "Core/Public/Containers.h"
+#include "Core/Public/Hooks.h"
 #include <Globals.h>
 
 Containers::FString::FString(const wchar_t* str)
