@@ -4,7 +4,6 @@
 
 bool Request::ProcessRequest(Containers::FCurlHttpRequest* HttpRequest)
 {
-    printf("ProcessRequest");
     auto URL = HttpRequest->GetURL().ToString();
     const wchar_t* domains[] = { L"epicgames.com", L"epicgames.dev", L"epicgames.net" };
 
