@@ -6,6 +6,7 @@ enum EModuleType
     Text,
     RData
 };
+
 namespace Finder
 {
     static std::vector<short> parsePattern(const char* pattern)

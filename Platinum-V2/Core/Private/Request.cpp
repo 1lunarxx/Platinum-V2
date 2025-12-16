@@ -95,6 +95,13 @@ void Request::Patch()
     if (!sRef) 
         sRef = Finder::FindString(L"%p: request (easy handle:%p) has been added to threaded queue for processing", ImageBase);
 
+    if (!sRef)
+    {
+        // really gay fix
+        Sleep(2500);
+        sRef = Finder::FindString(L"%p: request (easy handle:%p) has been added to threaded queue for processing", ImageBase);
+    }
+
     for (int i = 0; i < 2048; i++)
     {
         if (*(uint8_t*)(sRef - i) == 0x4C && *(uint8_t*)(sRef - i + 1) == 0x8B && *(uint8_t*)(sRef - i + 2) == 0xDC)
@@ -109,27 +116,13 @@ void Request::Patch()
             Hook(sRef - i, ProcessRequest, (void**)&Originals::ProcessRequest);
             break;
         }
-        else if (*(uint8_t*)(sRef - i) == 0x40 && *(uint8_t*)(sRef - i + 1) == 0x55)
-        {
-            Originals::ProcessRequest = reinterpret_cast<bool(*)(Containers::FCurlHttpRequest*)>(sRef - i);
-            Hook(sRef - i, ProcessRequest, (void**)&Originals::ProcessRequest);
-            break;
-        }
         else if (*(uint8_t*)(sRef - i) == 0x48 && *(uint8_t*)(sRef - i + 1) == 0x81 && *(uint8_t*)(sRef - i + 2) == 0xEC || *(uint8_t*)(sRef - i) == 0x48 && *(uint8_t*)(sRef - i + 1) == 0x83 && *(uint8_t*)(sRef - i + 2) == 0xEC)
         {
             for (int x = 0; x < 50; x++)
             {
-                if (*(uint8_t*)(sRef - i + x) == 0x40)
+                if (*(uint8_t*)(sRef - i - x) == 0x40)
                 {
-                    Originals::ProcessRequest = reinterpret_cast<bool(*)(Containers::FCurlHttpRequest*)>(sRef - i + x);
-                    Hook(sRef - i + x, ProcessRequest, (void**)&Originals::ProcessRequest);
-                    break;
-                }
-                else if (*(uint8_t*)(sRef - i + x) == 0x4C && *(uint8_t*)(sRef - i + x + 1) == 0x8B && *(uint8_t*)(sRef - i + x + 2) == 0xDC || *(uint8_t*)(sRef - i + x) == 0x48 && *(uint8_t*)(sRef - i + x + 1) == 0x8B && *(uint8_t*)(sRef - i + x + 2) == 0xC4 || *(uint8_t*)(sRef - i + x) == 0x48 && *(uint8_t*)(sRef - i + x + 1) == 0x89 && *(uint8_t*)(sRef - i + x + 2) == 0x5C)
-                {
-                    Originals::ProcessRequest = reinterpret_cast<bool(*)(Containers::FCurlHttpRequest*)>(sRef - i + x);
-                    Hook(sRef - i + x, ProcessRequest, (void**)&Originals::ProcessRequest);
-                    break;
+                    // later
                 }
             }
         }
