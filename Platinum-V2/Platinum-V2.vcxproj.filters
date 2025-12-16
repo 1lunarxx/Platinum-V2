@@ -36,6 +36,9 @@
     <ClInclude Include="Core\Public\Pak.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Public\Misc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -54,6 +57,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Core\Private\Pak.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Misc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,6 @@
 #include "Core/Public/Finder.h"
 #include <iostream>
+#include <Globals.h>
 
 IMAGE_SECTION_HEADER* Finder::PE::GetSection(const char* name, uintptr_t module)
 {
@@ -73,6 +74,11 @@ uintptr_t Finder::FindPattern(const char* signature, EModuleType Type)
     }
 
     return 0;
+}
+
+uintptr_t Finder::RelativeOffset(uintptr_t ptr, int rel32Off)
+{
+    return ptr + rel32Off + 4 + *(int32_t*)(ptr + rel32Off);
 }
 
 double Finder::FN_Version()

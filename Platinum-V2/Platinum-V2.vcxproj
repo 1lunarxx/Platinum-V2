@@ -146,6 +146,7 @@
     <ClInclude Include="Core\Public\Containers.h" />
     <ClInclude Include="Core\Public\Finder.h" />
     <ClInclude Include="Core\Public\Hooks.h" />
+    <ClInclude Include="Core\Public\Misc.h" />
     <ClInclude Include="Core\Public\Pak.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Core\Public\Request.h" />
@@ -157,6 +158,7 @@
     <ClCompile Include="Core\Private\Request.cpp" />
     <ClCompile Include="Core\Private\Hooks.cpp" />
     <ClCompile Include="Core\Private\Pak.cpp" />
+    <ClCompile Include="Core\Private\Misc.cpp" />
     <ClCompile Include="dllmain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

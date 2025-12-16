@@ -32,6 +32,7 @@ namespace Finder
 
 	uintptr_t FindString(const wchar_t* string, uintptr_t module);
 	uintptr_t FindPattern(const char* signature, EModuleType Type = EModuleType::Text);
+    uintptr_t RelativeOffset(uintptr_t ptr, int rel32Off);
 
     double FN_Version();
 }
