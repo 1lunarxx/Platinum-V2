@@ -85,15 +85,20 @@ double Finder::FN_Version()
 {
     const wchar_t* cl_string = reinterpret_cast<const wchar_t*>(FindPattern("2b 00 2b 00 46 00 6f 00 72 00 74 00 6e 00 69 00 74 00 65 00 2b 00 52 00 65 00 6c 00 65 00 61 00 73 00 65 00 2d 00", EModuleType::RData));
     if (!cl_string)
-        return 67.67;
+        return 0.0;
 
     const wchar_t* VStart = wcschr(cl_string, L'-');
     if (!VStart)
-        return 67.67;
-    VStart += 1; 
+        return 0.0;
+
+    VStart += 1;
+
+    if (!iswdigit(*VStart))
+        return 0.0;
 
     const wchar_t* VEnd = wcschr(VStart, L'-');
-    if (!VEnd) VEnd = cl_string + wcslen(cl_string); 
+    if (!VEnd)
+        VEnd = cl_string + wcslen(cl_string);
 
     size_t wcharCount = VEnd - VStart;
 
@@ -101,8 +106,11 @@ double Finder::FN_Version()
     memcpy(temp, VStart, wcharCount * sizeof(wchar_t));
     temp[wcharCount] = L'\0';
 
-    wchar_t* endPtr;
+    wchar_t* endPtr = nullptr;
     double version = wcstod(temp, &endPtr);
+
+    if (endPtr == temp)
+        version = 0.0;
 
     free(temp);
     return version;
