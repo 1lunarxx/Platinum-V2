@@ -2,10 +2,21 @@
 #include <Core/Public/Finder.h>
 #include <Globals.h>
 
+bool __fastcall sub_43958AC(__int64 a1)
+{
+    return false;
+}
+
 void Hooks::Patch()
 {
     if (Finder::FN_Version() < 29.00)
         return;
+      
+    if (Finder::FN_Version() == 29.00)
+    {
+        // matchmaking fix
+        Hook(ImageBase + 0x43958AC, sub_43958AC);
+    }
 
 	// UnsafeEnvorimentPopup
 	{
