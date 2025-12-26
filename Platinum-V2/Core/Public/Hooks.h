@@ -3,5 +3,6 @@
 
 namespace Hooks
 {
-	void Patch();
+    bool SecurityCheck(__int64 a1);
+    void Patch();
 }
