@@ -1,4 +1,2 @@
-## PLATINUM V2
-A rewrite of my original redirect, Platinum.
-
+## PLATINUM 
 Works on UE5+ games (fixing UE4 later)
