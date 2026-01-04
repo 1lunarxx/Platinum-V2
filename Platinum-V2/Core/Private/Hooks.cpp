@@ -13,8 +13,8 @@ void Hooks::Patch()
     if (Finder::FN_Version() < 10.00)
         return;
 
-    // Failed Security Check || Tested on 16.40
-    if (Finder::FN_Version() >= 16.00 && Finder::FN_Version() <= 17.30)
+    // Failed Security Check
+    if (Finder::FN_Version() == 16.00)
     {
         uintptr_t sRef = Finder::FindString(L"bPassSecurityCheck", ImageBase);
         uint8_t* Addr = 0;
