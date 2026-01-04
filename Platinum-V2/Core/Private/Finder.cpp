@@ -1,4 +1,5 @@
-﻿#include "Core/Public/Finder.h"
+﻿#include "pch.h"
+#include "Core/Public/Finder.h"
 #include <iostream>
 #include <Globals.h>
 

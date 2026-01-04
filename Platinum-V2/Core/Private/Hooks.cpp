@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Core/Public/Hooks.h"
 #include <Core/Public/Finder.h>
 #include <Globals.h>
@@ -9,49 +10,36 @@ bool Hooks::SecurityCheck(__int64 a1)
 
 void Hooks::Patch()
 {
-    if (Finder::FN_Version() < 29.00)
+    if (Finder::FN_Version() < 10.00)
         return;
-      
-    // // Security Check
-    // {
-    //     static const char* Patterns[] =
-    //     {
-    //         "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 48 8B FA 48 8B D9 B2 ? E8 ? ? ? ? 48 8B CB",
-    //         "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC ? 48 8B FA 48 8B D9 B2 ? E8 ? ? ? ? 48 8B CB E8 ? ? ? ? 48 8B F0"
-    //     };
 
-    //     uintptr_t Addr = 0;
-    //     uint8_t* SecurityBool = 0;
+    // Failed Security Check || Tested on 16.40
+    if (Finder::FN_Version() >= 16.00 && Finder::FN_Version() <= 17.30)
+    {
+        uintptr_t sRef = Finder::FindString(L"bPassSecurityCheck", ImageBase);
+        uint8_t* Addr = 0;
 
-    //     for (auto& p : Patterns)
-    //     {
-    //         Addr = Finder::FindPattern(p);
-    //         if (Addr) break;
-    //     }
+        if (sRef)
+        {
+            for (int i = 0; i < 0x400; i++)
+            {
+                uint8_t* p = (uint8_t*)(sRef - i);
+                if (p[0] == 0x48 && p[1] == 0x89 && p[2] == 0x5C)
+                {
+                    Addr = p;
+                    break;
+                }
+            }
+        }
 
-    //     if (!Addr)
-    //         return;
-
-    //     for (int i = 0; i < 0x150; i++)
-    //     {
-    //         uint8_t* p = (uint8_t*)Addr + i;
-    //         if (p[0] == 0xE8 && p[1] == 0xB8 && p[2] == 0x6A && p[3] == 0x2A && p[4] == 0xFB)
-    //         {
-    //             SecurityBool = p;
-    //             break;
-    //         }
-    //         else if (p[0] == 0xE8 && p[1] == 0x23 && p[2] == 0x8D && p[3] == 0xBA && p[4] == 0xF7)
-    //         {
-    //             SecurityBool = p;
-    //             break;
-    //         }
-    //     }
-
-    //     if (SecurityBool)
-    //     {
-    //         Hook(Finder::RelativeOffset((uintptr_t)SecurityBool, 1), SecurityCheck);
-    //     }
-    // }
+        if (Addr)
+        {
+            DWORD oldProt;
+            VirtualProtect((LPVOID)Addr, 1, PAGE_EXECUTE_READWRITE, &oldProt);
+            *(uint8_t*)Addr = 0xC3;
+            VirtualProtect((LPVOID)Addr, 1, oldProt, &oldProt);
+        }
+    }
 
 	// UnsafeEnvorimentPopup
 	{

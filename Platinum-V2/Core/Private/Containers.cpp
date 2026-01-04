@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Core/Public/Containers.h"
 #include "Core/Public/Hooks.h"
 #include <Globals.h>

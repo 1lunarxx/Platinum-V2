@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Core/Public/Pak.h"
 #include "Core/Public/Finder.h"
 #include <Globals.h>

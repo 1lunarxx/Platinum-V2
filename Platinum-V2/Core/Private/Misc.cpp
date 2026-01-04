@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "Core/Public/Misc.h"
 #include <Globals.h>
 
